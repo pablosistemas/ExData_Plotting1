@@ -1,0 +1,12 @@
+rm(list=ls())
+text<-read.table("household_power_consumption.txt",
+                 header=TRUE,sep=";")
+text.Date.conv<-as.Date(text$Date,format="%d/%m/%Y")
+index<-(text.Date.conv=="2007-02-01"|text.Date.conv=="2007-02-02")
+global_active_power<-as.numeric(text[index,]$Global_active_power)
+png(filename="plot2.png",width=480,height=480,units="px")
+plot(global_active_power,ylab="Global Active Power (kilowatts)",type="l",xaxt='n',yaxt='n')
+axis(2,at=seq(0,3000,800),labels=seq(0,6,2))
+axis(1,at=seq(0,2880,2880/3*1.5),labels=c("Thu","Fri","Sat"))
+dev.off()
+rm(text,text.Date.conv,index)
